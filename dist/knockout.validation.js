@@ -237,7 +237,7 @@ kv.configuration = configuration;
 			return;
 		}
 
-		if (context.options.deep) {
+		if (context.options.deep && utils.isObject(obj)) {
 			obj.__kv_traversed = true;
 			context.flagged.push(obj);
 		}
