@@ -87,7 +87,7 @@ kv.configuration = configuration;
 			return o !== null && typeof o === 'object';
 		},
 		isNumber: function(o) {
-			return !isNaN(o);	
+			return !isNaN(o);
 		},
 		isObservableArray: function(instance) {
 			return !!instance &&
@@ -102,7 +102,12 @@ kv.configuration = configuration;
 			var r = [];
 			for (var i in o) {
 				if (o.hasOwnProperty(i)) {
-					r.push(o[i]);
+					var observable = Object.getOwnPropertyDescriptor(o, i).get;
+					if (observable) {
+						r.push(observable);
+					} else {
+						r.push(o[i]);
+					}
 				}
 			}
 			return r;
@@ -196,7 +201,8 @@ kv.configuration = configuration;
 			}
 		}
 	};
-}());;var api = (function () {
+}());
+;var api = (function () {
 
 	var isInitialized = 0,
 		configuration = kv.configuration,
